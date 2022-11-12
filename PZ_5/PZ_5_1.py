@@ -11,6 +11,5 @@ def sum_numbers(x):
     while z <= x:
         s = z + s
         z += 1
- # for i in range(1,x+1):
     return s
 print("Сумма ряда: ", sum_numbers(x))
