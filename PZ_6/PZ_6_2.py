@@ -16,4 +16,4 @@ for i in range(N):
         print ('Первая ошибка появилась в символе номер ' + str(i + 1))
         break
 if len(a) == 0 :
-    print (str(0))
+    print(0)
