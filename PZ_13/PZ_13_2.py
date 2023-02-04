@@ -3,8 +3,7 @@
 import random
 
 i = int(input("Введите количество строк и столбцов: "))
-j = i
-m1 = [[random.randrange(1, 10) for y in range(j)] for x in range(i)]
+m1 = [[random.randrange(1, 10) for y in range(i)] for x in range(i)]
 print("Получившаяся квадратная матрица:")
 for i in m1:
     print(i)
