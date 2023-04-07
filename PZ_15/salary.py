@@ -2,7 +2,6 @@ import sqlite3 as sq
 from salary_data import *
 
 with sq.connect('salary.db') as con:
-    con.execute('PRAGMA foreign_keys = ON')
     cur = con.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS anketa (
      id_sotr INTEGER PRIMARY KEY,
@@ -38,6 +37,8 @@ with sq.connect('salary.db') as con:
 #    cur = con.cursor()
 #    cur.executemany("INSERT INTO sick_list VALUES (?,?,?,?,?,?,?)", info_list)
 
+
+"""SELECT"""
 #1.Вывести список всех сотрудников и их должностей
 #    cur.execute("""SELECT name, surname, post FROM anketa""")
 #    result = cur.fetchall()
@@ -107,11 +108,13 @@ with sq.connect('salary.db') as con:
 #    result = cur.fetchall()
 #print(result)
 
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
 #13.Вывести список сотрудников и информацию о последнем больничном листе, который они оформляли
 #    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
 #                "sick_list.reason, sick_list.diagnosis, sick_list.paid FROM anketa "
 #                 "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
-#                 "WHERE sick_list.start_date = (SELECT MIN(start_date) "
+#                 "WHERE sick_list.start_date = (SELECT MAX(start_date) "
 #                 "FROM sick_list WHERE sick_list.id_sotr = anketa.id_sotr)")
 #    result = cur.fetchall()
 #print(result)
@@ -132,3 +135,14 @@ with sq.connect('salary.db') as con:
 #                "GROUP BY name, surname ORDER BY summa")
 #    result = cur.fetchall()
 #print(result)
+
+"""UPDATE"""
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#1.Обновить базовую ставку сотрудника на определенной должности
+    cur.execute("""UPDATE anketa SET base_rate = 40000 WHERE post = 'Медбрат'""")
+
+#2.Обновить отдел для всех сотрудников в определенном диапазоне возраста.
+#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date IN('now' - 1986-01-31,'now' - 2015-08-31)""")
+
+#3.Обновить дату найма для сотрудника, получившего повышение.
