@@ -86,22 +86,49 @@ with sq.connect('salary.db') as con:
 #print(result)
 
 #10.Вывести список всех сотрудников и общее количество дней, проведенных ими на больничном
-#    cur.execute()
+#    cur.execute("SELECT anketa.name, anketa.surname, "
+#                "SUM(julianday(sick_list.end_date) - julianday(sick_list.start_date)) "
+#                "FROM anketa INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
+#                "GROUP BY anketa.name, anketa.surname")
 #    result = cur.fetchall()
 #print(result)
 
 #11.Вывести информацию о сотрудниках и их больничных листах за последний месяц
-#    cur.execute()
-#        result = cur.fetchall()
+#    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
+#                "sick_list.reason, sick_list.diagnosis, sick_list.paid FROM anketa "
+#                "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr WHERE "
+#                "sick_list.start_date >= DATE('now', '-3 month')")
+#    result = cur.fetchall()
 #print(result)
 
 #12.Вывести среднюю продолжительность больничных листов сотрудников в каждом отделе
-#    cur.execute()
-#        result = cur.fetchall()
+#    cur.execute("SELECT department, AVG(julianday(end_date) - julianday(start_date) + 1) FROM anketa "
+#                        "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr GROUP BY department")
+#    result = cur.fetchall()
 #print(result)
 
 #13.Вывести список сотрудников и информацию о последнем больничном листе, который они оформляли
-    cur.execute("SELECT * FROM sick_list INNER JOIN "
-                "anketa ON sick_list.id_sotr = anketa.id_sotr")
-    result = cur.fetchall()
-print(result)
+#    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
+#                "sick_list.reason, sick_list.diagnosis, sick_list.paid FROM anketa "
+#                 "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
+#                 "WHERE sick_list.start_date = (SELECT MIN(start_date) "
+#                 "FROM sick_list WHERE sick_list.id_sotr = anketa.id_sotr)")
+#    result = cur.fetchall()
+#print(result)
+
+#14. Вывести список сотрудников и информацию о первом больничном листе, который они оформляли
+#    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
+#                "sick_list.reason, sick_list.diagnosis, sick_list.paid FROM anketa "
+#                "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
+#                "WHERE sick_list.start_date = (SELECT MIN(start_date) "
+#                "FROM sick_list WHERE sick_list.id_sotr = anketa.id_sotr)")
+#    result = cur.fetchall()
+#print(result)
+
+#15.Вывести список сотрудников и суммарную продолжительность их больничных листов в текущем году
+#    cur.execute("SELECT name, surname, SUM(julianday(end_date) - julianday(start_date)) AS summa  FROM anketa "
+#                "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
+#                "WHERE strftime('%Y', start_date) = strftime('%Y', 'now') "
+#                "GROUP BY name, surname ORDER BY summa")
+#    result = cur.fetchall()
+#print(result)
