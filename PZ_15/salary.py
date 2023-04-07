@@ -140,9 +140,14 @@ with sq.connect('salary.db') as con:
 with sq.connect('salary.db') as con:
     cur = con.cursor()
 #1.Обновить базовую ставку сотрудника на определенной должности
-    cur.execute("""UPDATE anketa SET base_rate = 40000 WHERE post = 'Медбрат'""")
+#    cur.execute("""UPDATE anketa SET base_rate = 40000 WHERE post = 'Медбрат'""")
 
 #2.Обновить отдел для всех сотрудников в определенном диапазоне возраста.
-#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date IN('now' - 1986-01-31,'now' - 2015-08-31)""")
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date >= DATE('now', '-100 month')""")
 
 #3.Обновить дату найма для сотрудника, получившего повышение.
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+    cur.execute("""UPDATE anketa SET hire_data = '2023-04-07' WHERE """)
