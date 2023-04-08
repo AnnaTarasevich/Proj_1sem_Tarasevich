@@ -38,6 +38,17 @@ with sq.connect('salary.db') as con:
 #    cur.executemany("INSERT INTO sick_list VALUES (?,?,?,?,?,?,?)", info_list)
 
 
+#Добавила колонку raising, в которой указано, получфл ли сотрудник повышение
+#with sq.connect('salary.db') as con:
+#    cur = con.cursor()
+#    cur.execute("""ALTER TABLE anketa ADD raising boolean""")
+
+#with sq.connect('salary.db') as con:
+#    cur = con.cursor()
+#    cur.execute("""UPDATE anketa SET raising = 0 WHERE id_sotr = 42""")
+
+
+
 """SELECT"""
 #1.Вывести список всех сотрудников и их должностей
 #    cur.execute("""SELECT name, surname, post FROM anketa""")
@@ -145,9 +156,9 @@ with sq.connect('salary.db') as con:
 #2.Обновить отдел для всех сотрудников в определенном диапазоне возраста.
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date >= DATE('now', '-100 month')""")
+#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date BETWEEN '1986-01-31' AND '2015-08-31'""")
 
 #3.Обновить дату найма для сотрудника, получившего повышение.
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-    cur.execute("""UPDATE anketa SET hire_data = '2023-04-07' WHERE """)
+#    cur.execute("""UPDATE anketa SET  = '2023-04-08' WHERE id_a = 5""")
