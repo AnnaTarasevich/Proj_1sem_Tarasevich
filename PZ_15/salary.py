@@ -156,9 +156,50 @@ with sq.connect('salary.db') as con:
 #2.Обновить отдел для всех сотрудников в определенном диапазоне возраста.
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date BETWEEN '1986-01-31' AND '2015-08-31'""")
+#    cur.execute("""UPDATE anketa SET department = 'Администрация' WHERE birth_date BETWEEN '2000-01-31' AND '2015-08-31'""")
 
 #3.Обновить дату найма для сотрудника, получившего повышение.
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-#    cur.execute("""UPDATE anketa SET  = '2023-04-08' WHERE id_a = 5""")
+#    cur.execute("""UPDATE anketa SET hire_data = '2023-04-08' WHERE raising = '1'""")
+
+#4.Обновить причину больничного листа для сотрудника
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#   cur.execute("""UPDATE sick_list SET reason = 'Отравление' WHERE id_list = 8""")
+
+#5.Обновить базовую ставку сотрудника в таблице "Анкета" на определенный
+#процент, используя INNER JOIN с таблицей "Больничные листы". При этом
+#необходимо исключить из обновления сотрудников, у которых были неоплаченные
+#больничные листы!!!!!!
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#    cur.execute("UPDATE anketa SET base_rate = base_rate * 1.2 INNER JOIN"
+#    "sick_list ON anketa.id_sotr = sick_list.id_sotr  WHERE sick_list.paid = 1")
+
+#6.Обновить дату начала больничного листа в таблице "Больничные листы" на
+#определенную дату, используя INNER JOIN с таблицей "Анкета". При этом
+#необходимо исключить из обновления больничные листы с уже пройденной датой
+#начала!!!!!!
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#    cur.execute("UPDATE sick_list SET start_date = '2023-01-01' INNER JOIN "
+#                "anketa ON sick_list.id_sotr = anketa.id_sotr "
+#                " WHERE sick_list.start_date < '2023-01-01'")
+
+#7.Обновить причину больничного листа в таблице "Больничные листы" на
+#определенное значение для всех сотрудников, работающих в отделе "Бухгалтерия".
+with sq.connect('salary.db') as con:
+     cur = con.cursor()
+#    cur.execute("UPDATE sick_list SET reason = 'Ушиб' WHERE id_sotr "
+#                "IN (SELECT id_sotr FROM anketa WHERE department = 'Бухгалтерия')")
+
+
+"""DELETE"""
+#1.Удалить все записи о больничных листах для сотрудника с именем "Иван"!!!!!!!
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+    cur.execute("DELETE FROM sick_list INNER JOIN "
+                "anketa ON sick_list.id_sotr = anketa.id_sotr WHERE anketa.name = 'Иван'")
+
+#2.
