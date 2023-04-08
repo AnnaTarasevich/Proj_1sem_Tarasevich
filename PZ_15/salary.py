@@ -38,7 +38,7 @@ with sq.connect('salary.db') as con:
 #    cur.executemany("INSERT INTO sick_list VALUES (?,?,?,?,?,?,?)", info_list)
 
 
-#Добавила колонку raising, в которой указано, получфл ли сотрудник повышение
+#Добавила колонку raising, в которой указано, получил ли сотрудник повышение
 #with sq.connect('salary.db') as con:
 #    cur = con.cursor()
 #    cur.execute("""ALTER TABLE anketa ADD raising boolean""")
