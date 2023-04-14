@@ -278,6 +278,6 @@ with sq.connect('salary.db') as con:
 # 15.Удалить все больничные листы, связанные со сотрудниками старше 50 лет из таблицы "Больничные листы"
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-    cur.execute("DELETE FROM sick_list WHERE id_sotr IN (SELECT id_sotr FROM anketa WHERE birth_date<= '1973-01-01')")
+#    cur.execute("DELETE FROM sick_list WHERE id_sotr IN (SELECT id_sotr FROM anketa WHERE birth_date<= '1973-01-01')")
 
 
