@@ -86,12 +86,12 @@ with sq.connect('salary.db') as con:
 # 8.Вывести среднюю базовую ставку всех сотрудников
 #    cur.execute("""SELECT AVG(base_rate) FROM anketa""")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 # 9.Вывести список всех сотрудников, имеющих базовую ставку выше 100 000
 #    cur.execute("SELECT id_sotr, name, surname FROM anketa WHERE base_rate > 100000")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 # 10.Вывести список всех сотрудников и общее количество дней, проведенных ими на больничном
 #    cur.execute("SELECT anketa.name, anketa.surname, "
@@ -99,7 +99,7 @@ with sq.connect('salary.db') as con:
 #                "FROM anketa INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
 #                "GROUP BY anketa.name, anketa.surname")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 # 11.Вывести информацию о сотрудниках и их больничных листах за последний месяц
 #    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
@@ -113,7 +113,7 @@ with sq.connect('salary.db') as con:
 #    cur.execute("SELECT department, AVG(julianday(end_date) - julianday(start_date) + 1) FROM anketa "
 #                        "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr GROUP BY department")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 with sq.connect('salary.db') as con:
     cur = con.cursor()
@@ -124,7 +124,7 @@ with sq.connect('salary.db') as con:
 #                 "WHERE sick_list.start_date = (SELECT MAX(start_date) "
 #                 "FROM sick_list WHERE sick_list.id_sotr = anketa.id_sotr)")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 # 14. Вывести список сотрудников и информацию о первом больничном листе, который они оформляли
 #    cur.execute("SELECT anketa.name, anketa.surname, sick_list.start_date, sick_list.end_date, "
@@ -133,15 +133,15 @@ with sq.connect('salary.db') as con:
 #                "WHERE sick_list.start_date = (SELECT MIN(start_date) "
 #                "FROM sick_list WHERE sick_list.id_sotr = anketa.id_sotr)")
 #    result = cur.fetchall()
-# print(result)
+#print(result)
 
 # 15.Вывести список сотрудников и суммарную продолжительность их больничных листов в текущем году
-    cur.execute("SELECT name, surname, SUM(julianday(end_date) - julianday(start_date)) AS summa FROM anketa "
-                "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
-                "WHERE strftime('%Y', start_date) = strftime('%Y', 'now') "
-                "GROUP BY name, surname ORDER BY summa")
-    result = cur.fetchall()
-print(result)
+#    cur.execute("SELECT name, surname, SUM(julianday(end_date) - julianday(start_date)) AS summa FROM anketa "
+#                "INNER JOIN sick_list ON anketa.id_sotr = sick_list.id_sotr "
+#                "WHERE strftime('%Y', start_date) = strftime('%Y', 'now') "
+#                "GROUP BY name, surname ORDER BY summa")
+#    result = cur.fetchall()
+#print(result)
 
 """UPDATE"""
 with sq.connect('salary.db') as con:
@@ -164,6 +164,24 @@ with sq.connect('salary.db') as con:
     cur = con.cursor()
 #   cur.execute("""UPDATE sick_list SET reason = 'Отравление' WHERE id_list = 8""")
 
+# 5.Обновить базовую ставку сотрудника в таблице "Анкета" на определенный
+# процент, используя INNER JOIN с таблицей "Больничные листы". При этом
+# необходимо исключить из обновления сотрудников, у которых были неоплаченные
+# больничные листы.
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#    cur.execute("UPDATE anketa SET base_rate = base_rate * 1.2 "
+#                "WHERE id_sotr IN(SELECT id_sotr FROM sick_list WHERE paid = 1)")
+
+# 6.Обновить дату начала больничного листа в таблице "Больничные листы" на
+# определенную дату, используя INNER JOIN с таблицей "Анкета". При этом
+# необходимо исключить из обновления больничные листы с уже пройденной датой
+# начала
+with sq.connect('salary.db') as con:
+    cur = con.cursor()
+#    cur.execute("UPDATE sick_list SET start_date = '2022-05-05' "
+#               "WHERE start_date < '2022-08-10'")
+
 # 7.Обновить причину больничного листа в таблице "Больничные листы" на
 # определенное значение для всех сотрудников, работающих в отделе "Бухгалтерия".
 with sq.connect('salary.db') as con:
@@ -173,10 +191,10 @@ with sq.connect('salary.db') as con:
 
 
 """DELETE"""
-# 1.Удалить все записи о больничных листах для сотрудника с именем "Иван"!!!!!!!
+# 1.Удалить все записи о больничных листах для сотрудника с именем "Иван"
 with sq.connect('salary.db') as con:
     cur = con.cursor()
-#   cur.execute("DELETE FROM sick_list WHERE id_sotr IN(SELECT id_sotr FROM anketa WHERE name = 'Иван')")
+#    cur.execute("DELETE FROM sick_list WHERE id_sotr IN(SELECT id_sotr FROM anketa WHERE name = 'Иван')")
 
 # 2.Удалить все записи о больничных листах для сотрудника с фамилией "Петров"
 with sq.connect('salary.db') as con:
@@ -233,7 +251,8 @@ with sq.connect('salary.db') as con:
     cur = con.cursor()
 #    cur.execute("DELETE FROM sick_list WHERE id_sotr IN (SELECT id_sotr FROM anketa WHERE surname LIKE 'С%')")
 
-# 13.Удалить все больничные листы, которые еще не были оплачены, у сотрудников с должностью "Менеджер" из таблицы "Больничные листы"
+# 13.Удалить все больничные листы, которые еще не были оплачены, у сотрудников с должностью "Менеджер" из таблицы
+# "Больничные листы"
 with sq.connect('salary.db') as con:
     cur = con.cursor()
 #    cur.execute(" DELETE FROM sick_list WHERE paid = 0 AND id_sotr "
@@ -249,7 +268,3 @@ with sq.connect('salary.db') as con:
 with sq.connect('salary.db') as con:
     cur = con.cursor()
 #    cur.execute("DELETE FROM sick_list WHERE id_sotr IN (SELECT id_sotr FROM anketa WHERE birth_date<= '1973-01-01')")
-
-#with sq.connect('salary.db') as con:
-#    cur = con.cursor()
-#    cur.execute("INSERT INTO sick_list values (18, 9, '2023-04-23', '2023-04-25', 'Болезнь', 'Ангина', 1)")
