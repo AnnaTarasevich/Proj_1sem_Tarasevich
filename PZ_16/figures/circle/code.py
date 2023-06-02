@@ -1,9 +1,9 @@
-default_radius = 5
+__all__ = ['circle_perimeter', 'circle_area']
 
-def circle_perimeter(default_radius=default_radius):
-    p = 2*3.14*default_radius
-    print(p)
 
-def circle_area(default_radius=default_radius):
-    a= 3.14*default_radius**2
-    print(a)
+def circle_perimeter(radius=5):
+    return 2 * radius * 3.14
+
+
+def circle_area(radius=5):
+    return radius ** 2 * 3.14

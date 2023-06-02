@@ -1,8 +1,9 @@
-a = 15
-def square_perimeter(a=a):
-    P = a*4
-    print(P)
+__all__ = ['square_perimeter', 'square_perimeter']
 
-def square_area(a=a):
-    A= a*a
-    print(A)
+
+def square_perimeter(a=15):
+    return a * 4
+
+
+def square_area(a=15):
+    return a ** 2
